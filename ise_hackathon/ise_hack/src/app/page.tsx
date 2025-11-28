@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import CameraView from "./components/CameraView";
+import PostureMonitor from "@/app/components/PostureMoniter"; // Import PostureMonitor
 import SessionControls from "./components/SessionControls";
 import Alerts from "./components/Alerts";
 import Dashboard from "./components/Dashboard";
@@ -18,7 +18,8 @@ export default function Page() {
       }}
     >
       <section className="left-col">
-        <CameraView />
+        {/* Replace CameraView with PostureMonitor */}
+        <PostureMonitor />
       </section>
 
       <aside
