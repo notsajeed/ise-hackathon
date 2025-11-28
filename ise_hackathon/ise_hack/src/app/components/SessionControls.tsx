@@ -1,52 +1,14 @@
+// src/app/components/SessionControls.tsx
 "use client";
-import React, { useEffect, useState } from "react";
-import SessionService from "../lib/services/SessionService";
-import HydrationService from "../lib/services/HydrationService";
 
 export default function SessionControls() {
-  const [running, setRunning] = useState(false);
-
-  useEffect(() => {
-    SessionService.setStatusCallback((s) => setRunning(!!s.running));
-    HydrationService.setCallback((note) => {
-      // hydration notification - use window alert or custom UI integration
-      // we'll emit a simple console / browser notification
-      if (typeof window !== "undefined" && "Notification" in window) {
-        if (Notification.permission === "granted") {
-          new Notification(note.title, { body: note.body });
-        } else {
-          // fallback small toast (console)
-          console.log("Hydration:", note);
-        }
-      }
-    });
-  }, []);
-
   return (
-    <div className="session-card">
-      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-        <button
-          onClick={() => {
-            SessionService.startSession({ userId: "demo_user" });
-            HydrationService.start(20);
-          }}
-          disabled={running}
-        >
-          Start Focus Session
-        </button>
-        <button
-          onClick={() => {
-            SessionService.stopSession();
-            HydrationService.stop();
-          }}
-          disabled={!running}
-        >
-          Stop
-        </button>
-      </div>
-      <div style={{ marginTop: 8, color: "#9aa0a6", fontSize: 12 }}>
-        When running, on-device posture detection will alert you in real-time.
-        Uploads happen only when you opt in.
+    <div className="bg-green-500/20 backdrop-blur-sm rounded-2xl p-6 text-white border border-green-500/30">
+      <div className="text-3xl font-bold mb-2">00:12:34</div>
+      <div className="text-sm opacity-75">Session Active</div>
+      <div className="flex gap-2 mt-4">
+        <button className="flex-1 bg-white/20 px-4 py-2 rounded-xl hover:bg-white/30 transition-all">⏸️ Pause</button>
+        <button className="flex-1 bg-red-500/80 px-4 py-2 rounded-xl hover:bg-red-500 transition-all">⏹️ End</button>
       </div>
     </div>
   );

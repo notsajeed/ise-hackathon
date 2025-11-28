@@ -1,49 +1,29 @@
+// src/app/components/Settings.tsx
 "use client";
-import React, { useEffect, useState } from "react";
-import StorageService from "../lib/services/StorageService";
 
 export default function Settings() {
-  const [sensitivity, setSensitivity] = useState<number>(0.5);
-  const [uploadOptIn, setUploadOptIn] = useState<boolean>(false);
-
-  useEffect(() => {
-    const s = StorageService.get("sensitivity") ?? 0.5;
-    setSensitivity(s);
-    const up = StorageService.get("uploadOptIn") ?? false;
-    setUploadOptIn(up);
-  }, []);
-
-  function save() {
-    StorageService.set("sensitivity", sensitivity);
-    StorageService.set("uploadOptIn", uploadOptIn);
-    // persist to server settings optionally
-    fetch("/api/settings?userId=demo_user").catch(() => {});
-  }
-
   return (
-    <div className="settings-card">
-      <h3>Settings</h3>
-      <label>Sensitivity</label>
-      <input
-        type="range"
-        min={0}
-        max={1}
-        step={0.01}
-        value={sensitivity}
-        onChange={(e) => setSensitivity(Number(e.target.value))}
-      />
-      <div style={{ marginTop: 8 }}>
-        <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <input
-            type="checkbox"
-            checked={uploadOptIn}
-            onChange={(e) => setUploadOptIn(e.target.checked)}
-          />{" "}
-          Upload metrics to server (opt-in)
-        </label>
-      </div>
-      <div className="settings-actions" style={{ marginTop: 10 }}>
-        <button onClick={save}>Save</button>
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-white border border-white/20 min-h-[200px]">
+      <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+        ⚙️ Settings
+      </h3>
+      <div className="space-y-3 text-sm">
+        <div className="flex justify-between">
+          <span>Alert Sensitivity</span>
+          <span className="font-mono">Medium</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Sound Alerts</span>
+          <span className="font-mono">On</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Auto-pause</span>
+          <span className="font-mono">30min</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Model</span>
+          <span className="font-mono">MoveNet Lightning</span>
+        </div>
       </div>
     </div>
   );

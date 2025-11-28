@@ -1,7 +1,14 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  // Enable Turbopack (default in Next.js 16)
+  turbopack: {},
+  
+  // Optional: Page data threshold
+  experimental: {
+    largePageDataBytes: 150 * 1024
+  }
 };
 
-export default nextConfig;
+module.exports = nextConfig;
+
